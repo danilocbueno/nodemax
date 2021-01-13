@@ -14,4 +14,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(routesAdmin);
 app.use(routesShop);
 
+//pagina 404
+app.use((req, res, next) => {
+  res.send(404, "Página não encontrada!");
+  //res.status(404).send("404");  // ou essa
+});
+
 app.listen(3000);
