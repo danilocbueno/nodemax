@@ -20,3 +20,16 @@
 -> instalar o body-parser com o npm i body-parser
 -> importar no projeto e adicionar como novo middleware
     
+
+## Aula 74
+
+-> Os arquivos não estão sendo servidos automaticamente (estaticos para o publico)
+-> criar uma pasta public (ai sim ficará publico)
+-> servir arquivos estáticos (ou seja não servir pelo express)
+-> o proprio express tem um middleware que fornecess isso o
+
+` app.use(express.static(path.join(__dirname, 'public'))); `
+
+-> o express vai pegar todo recurso e direcionar para o diretório publico, nesse sentido a url do recurso pode começar a partir de publico!
+-> adicionar os arquivos CSS (peguei pronto)
+-> linkar eles nos arquivos HTML
