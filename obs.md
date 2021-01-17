@@ -33,3 +33,14 @@
 -> o express vai pegar todo recurso e direcionar para o diretório publico, nesse sentido a url do recurso pode começar a partir de publico!
 -> adicionar os arquivos CSS (peguei pronto)
 -> linkar eles nos arquivos HTML
+
+## Aula 78
+
+-> compartilhando dados via arquivos JS
+-> criou o adminData no arquivo admin e compartilhou com os demais aruqivos
+-> por enquanto porque não está usando databse
+
+## Aula 80
+-> fala um pouco de todos os templates
+-> instala todos e vai testando um por um
+-> 
