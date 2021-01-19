@@ -48,3 +48,18 @@
 ## Testando o https://www.npmjs.com/package/express-ejs-layouts-
 -> instalando, usei esse tutorial: https://www.codementor.io/@nulldreams/utilizando-a-engine-ejs-para-aplicacoes-em-nodejs-dok81l3si
 -> 
+
+## Aula 97
+-> adicionando controllers
+-> basicamente cria a pasta controllers, extrai as funções para ele e deixa as rotas chamando os controllers;
+
+## Aula 98
+-> adiciona o controlador de erros
+
+## Aula 99
+-> adicionando modelos; utiliza-se a sintaxe de classe o que pode confundir um pouco; utilizou também uma variável global para armazenar os produtos porque ainda não tem banco; pra acessar essa variável usou um método estático da classe;
+-> TypeError: Cannot read property 'length' of undefined
+-> pra resolver esse erro necessita usar callback porque quando ele vai renderizar a view, a leitura do arquivo (que é async ainda não pode ter terminado); então encapsula a fetchAll em uma cb
+
+## Aula 100 - 103
+-> faz a refatoração do model

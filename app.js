@@ -3,6 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const expressLayouts = require('express-ejs-layouts');
 
+const errorController = require('./controllers/error');
+
 //importando os arquivos de rotas
 const adminRoutes = require('./routes/admin');
 const routesShop = require('./routes/shop');
@@ -25,12 +27,7 @@ app.use('/admin', adminRoutes);
 app.use(routesShop);
 
 //pagina 404
-app.use((req, res, next) => {
-  //res.send(404, "Página não encontrada!");
-  //res.status(404).send("404");  // ou essa
-  //res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
-  res.status(404).render('404', {pageTitle: 'Page not Found'});
-});
+app.use(errorController.get404);
 
 //para poder garantir o deploy no heroku
 const port = process.env.PORT || 3000;
