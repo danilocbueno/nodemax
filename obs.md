@@ -44,3 +44,7 @@
 -> fala um pouco de todos os templates
 -> instala todos e vai testando um por um
 -> 
+
+## Testando o https://www.npmjs.com/package/express-ejs-layouts-
+-> instalando, usei esse tutorial: https://www.codementor.io/@nulldreams/utilizando-a-engine-ejs-para-aplicacoes-em-nodejs-dok81l3si
+-> 
