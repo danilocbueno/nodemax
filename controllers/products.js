@@ -5,7 +5,7 @@ const Product = require('../models/product');
 
 exports.getAddProduct = (req, res, next) => {
     //res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
-    res.render('add-product', {
+    res.render('admin/add-product', {
         pageTitle: 'Add Product',
         path: '/admin/add-product',
         formsCSS: true,
@@ -24,11 +24,11 @@ exports.postAddProductTurbo = (req, res, next) => {
     res.sendFile(path.join(rootDir, 'views/html', 'teste.html'));
 };
 
-exports.getProduct = (req, res, next) => {
+exports.getProducts = (req, res, next) => {
     //console.log('shop page', adminData.products);
     //res.sendFile(path.join(rootDir, 'views', 'shop.html'));
     Product.fetchAll(products => {
-        res.render('shop', {
+        res.render('shop/product-list', {
             prods: products,
             pageTitle: 'Shop',
             path: '/',
