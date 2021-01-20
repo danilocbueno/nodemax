@@ -1,6 +1,3 @@
-const path = require('path');
-const rootDir = require('../util/path');
-
 const Product = require('../models/product');
 
 exports.getAddProduct = (req, res, next) => {
@@ -20,22 +17,12 @@ exports.postAddProduct = (req, res, next) => {
     res.redirect('/');
 };
 
-exports.postAddProductTurbo = (req, res, next) => {
-    res.sendFile(path.join(rootDir, 'views/html', 'teste.html'));
-};
-
 exports.getProducts = (req, res, next) => {
-    //console.log('shop page', adminData.products);
-    //res.sendFile(path.join(rootDir, 'views', 'shop.html'));
     Product.fetchAll(products => {
-        res.render('shop/product-list', {
+        res.render('admin/products', {
             prods: products,
-            pageTitle: 'Shop',
-            path: '/',
-            hasProducts: products.length > 0,
-            activeShop: true,
-            productCSS: true
+            pageTitle: 'Admin Products',
+            path: '/admin/products'
         });
     });
-
 };

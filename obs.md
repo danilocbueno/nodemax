@@ -63,3 +63,6 @@
 
 ## Aula 100 - 103
 -> faz a refatoração do model
+
+## Seção 8 opicional
+-> adicionou novas views no projeto como detalhes etc.
