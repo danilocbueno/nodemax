@@ -19,6 +19,7 @@
                         </p>
                     </div>
                     <div class="card__actions">
+                        <a class="btn" href="/products/<%= product.id %>">Details</a>
                         <form action="/add-to-cart" method="POST">
                             <button class="btn">Add to Cart</button>
                         </form>
@@ -26,6 +27,6 @@
                 </article>
             <% } %>
         </div>
-        <% } else { %>
-            <h1>No Products Found!</h1>
-        <% } %>
+    <% } else { %>
+        <h1>No Products Found!</h1>
+    <% } %>
