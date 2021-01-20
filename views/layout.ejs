@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <nav class="main-header__nav">
+            <ul class="main-header__item-list">
+                <li class="main-header__item"><a href="/">Shop</a></li>
+                <li class="main-header__item"><a href="/products">Products</a></li>
+                <li class="main-header__item"><a href="/cart">Cart</a></li>
+                <li class="main-header__item"><a href="/orders">Orders</a></li>
+                <li class="main-header__item"><a href="/admin/add-product">Add Products</a></li>
+                <li class="main-header__item"><a href="/admin/products">Admin Products</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <%- body %>
+
+        <turbo-frame id="new_message">
+            <form action="/turbo" method="GET">
+              <button type="submit">vai</button>
+            </form>
+          </turbo-frame>
+    </main>
+
+    <footer>
+        my footer!
+    </footer>
+
+
+    <script type="module">
+        import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo';
+    </script>
+</body>
+
+</html>
