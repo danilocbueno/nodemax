@@ -3,8 +3,8 @@ const rootDir = require('../util/path');
 
 const Product = require('../models/product');
 
-exports.postAddProductTurbo = (req, res, next) => {
-    res.sendFile(path.join(rootDir, 'views/html', 'teste.html'));
+exports.getTurbo = (req, res, next) => {
+    res.sendFile(path.join(rootDir, 'views/html', 'turbo.html'));
 };
 
 exports.getProducts = (req, res, next) => {
