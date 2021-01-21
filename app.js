@@ -8,6 +8,7 @@ const errorController = require('./controllers/error');
 //importando os arquivos de rotas
 const adminRoutes = require('./routes/admin');
 const routesShop = require('./routes/shop');
+const routesTurbo = require('./routes/turbo');
 
 const app = express();
 
@@ -20,11 +21,12 @@ app.use(expressLayouts);
 app.use(bodyParser.urlencoded({ extended: false }));
 
 //servido arquivos estáticos!
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 //importando as rotas
 app.use('/admin', adminRoutes);
 app.use(routesShop);
+app.use(routesTurbo);
 
 //pagina 404
 app.use(errorController.get404);

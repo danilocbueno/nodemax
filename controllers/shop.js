@@ -2,10 +2,7 @@ const path = require('path');
 const rootDir = require('../util/path');
 
 const Product = require('../models/product');
-
-exports.getTurbo = (req, res, next) => {
-    res.sendFile(path.join(rootDir, 'views/html', 'turbo.html'));
-};
+const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {
     //console.log('shop page', adminData.products);
@@ -22,9 +19,9 @@ exports.getProducts = (req, res, next) => {
 exports.getProduct = (req, res, next) => {
     const prodId = req.params.productId;
     Product.findById(prodId, product => {
-        console.log(product);
+        res.render('shop/product-detail', {product: product});
     });
-    res.redirect('/')
+    
 };
 
 
@@ -43,6 +40,14 @@ exports.getCart = (req, res, next) => {
         path: '/cart',
         pageTitle: 'Your Cart'
     });
+};
+
+exports.postCart = (req, res, next) => {
+    const productId = req.body.productId;
+    Product.findById(productId, (prod) => {
+        Cart.addProduct(prod.id, prod.price);
+    })
+    res.redirect('/cart');
 };
 
 exports.getOrders = (req, res, next) => {

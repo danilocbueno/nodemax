@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product</title>
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/forms.css">
-    <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/public/css/main.css">
+    <link rel="stylesheet" href="/public/css/forms.css">
+    <link rel="stylesheet" href="/public/css/product.css">
 </head>
 
 <body>
@@ -27,6 +27,12 @@
     <main>
         <%- body %>
 
+
+        <form method="POST" action="/turbo2">
+            <input type="text" name="title" value="alow">
+            <button type="submit">turbo2</button>
+        </form>
+
         <turbo-frame id="new_message">
             <form action="/turbo" method="GET">
               <button type="submit">vai</button>
@@ -40,7 +46,7 @@
 
 
     <script type="module">
-        import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo';
+        //import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo';
     </script>
 </body>
 

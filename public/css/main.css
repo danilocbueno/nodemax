@@ -193,7 +193,7 @@ form {
   color: white;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 568px) {
   .main-header__nav {
     display: flex;
   }
@@ -201,4 +201,8 @@ form {
   #side-menu-toggle {
     display: none;
   }
+}
+
+.centered {
+  text-align: center;
 }
