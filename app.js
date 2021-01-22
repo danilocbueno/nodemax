@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const expressLayouts = require('express-ejs-layouts');
 
 const errorController = require('./controllers/error');
+const db = require('./util/database');
 
 //importando os arquivos de rotas
 const adminRoutes = require('./routes/admin');
@@ -27,6 +28,11 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/admin', adminRoutes);
 app.use(routesShop);
 app.use(routesTurbo);
+
+//db
+db.execute('SELECT * FROM products').then((products) => {
+    console.log(products);
+})
 
 //pagina 404
 app.use(errorController.get404);
