@@ -29,11 +29,6 @@ app.use('/admin', adminRoutes);
 app.use(routesShop);
 app.use(routesTurbo);
 
-//db
-db.execute('SELECT * FROM products').then((products) => {
-    console.log(products);
-})
-
 //pagina 404
 app.use(errorController.get404);
 
