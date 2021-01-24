@@ -66,3 +66,8 @@
 
 ## Seção 8 opicional
 -> adicionou novas views no projeto como detalhes etc.
+
+
+## Sequelize
+->  npm install --save sequelize
+-> alterar o arquivo database fazendo a conexão com o sequelize
