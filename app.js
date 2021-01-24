@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const expressLayouts = require('express-ejs-layouts');
 
 const errorController = require('./controllers/error');
-const db = require('./util/database');
+const sequelize = require('./util/database');
 
 //importando os arquivos de rotas
 const adminRoutes = require('./routes/admin');
@@ -31,6 +31,14 @@ app.use(routesTurbo);
 
 //pagina 404
 app.use(errorController.get404);
+
+
+//sequelize (sincroniza o models com o banco em si)
+sequelize.sync().then(result => {
+   // console.log(result);
+}).catch(err => {
+    console.log(err);
+});
 
 //para poder garantir o deploy no heroku
 const port = process.env.PORT || 3000;
