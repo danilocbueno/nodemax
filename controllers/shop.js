@@ -4,38 +4,47 @@ const rootDir = require('../util/path');
 const Product = require('../models/product');
 const Cart = require('../models/cart');
 
-exports.getProducts = (req, res, next) => {
-    //console.log('shop page', adminData.products);
-    //res.sendFile(path.join(rootDir, 'views', 'shop.html'));
-    Product.fetchAll()
-    .then(([rows, fieldData]) => {
+// /products
+exports.getProducts = async (req, res, next) => {
+
+    try {
+        const products = await Product.findAll({ raw: true });
         res.render('shop/product-list', {
-            prods: rows,
-            pageTitle: 'All Products',
-            path: '/products'
+            prods: products,
+            pageTitle: 'Shop',
+            path: '/'
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+// /
+exports.getIndex = async (req, res, next) => {
+
+    //const products = await Product.findAll({raw: true});
+    //console.log("All products:", JSON.stringify(products, null, 2));
+    //console.log(products);
+
+
+    Product.findAll({ raw: true })
+        .then(prodcuts => {
+            console.log(prodcuts);
+            res.render('shop/index', {
+                prods: prodcuts,
+                pageTitle: 'Shop',
+                path: '/'
+            });
         })
-    });
+        .catch(err => console.log(err));
 };
 
 exports.getProduct = (req, res, next) => {
     const prodId = req.params.productId;
-    Product.findById(prodId)
-        .then(([product]) => {
-            res.render('shop/product-detail', {product: product[0]});
-        })
-        .catch(err => console.log(err));
-    
-};
-
-exports.getIndex = (req, res, next) => {
-    Product.fetchAll()
-        .then(([rows, fieldData]) => {
-            
-            res.render('shop/index', {
-                prods: rows,
-                pageTitle: 'Shop',
-                path: '/'
-            });
+    Product.findByPk(prodId, { raw: true })
+        .then(product => {
+            console.log(product);
+            res.render('shop/product-detail', { product: product });
         })
         .catch(err => console.log(err));
 
@@ -45,10 +54,10 @@ exports.getCart = (req, res, next) => {
     Cart.getCart(cart => {
         Product.fetchAll(products => {
             const cartProducts = [];
-            for(product of products){
+            for (product of products) {
                 const cartProductData = cart.products.find(prod => prod.id === product.id);
-                if(cartProductData){
-                    cartProducts.push({productData: product, qty: cartProductData.qty});
+                if (cartProductData) {
+                    cartProducts.push({ productData: product, qty: cartProductData.qty });
                 }
             }
             res.render('shop/cart', {
@@ -56,7 +65,7 @@ exports.getCart = (req, res, next) => {
                 pageTitle: 'Your Cart',
                 products: cartProducts
             });
-        })        
+        })
     })
 };
 
