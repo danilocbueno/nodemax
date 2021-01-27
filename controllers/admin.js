@@ -10,20 +10,22 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
     const title = req.body.title;
-    const imageURL = req.body.imageURL;
+    const imageURL = req.body.imageUrl;
     const price = req.body.price;
     const description = req.body.description;
 
-    Product.create({
+    req.user.createProduct({
         title: title,
         price: price,
         imageUrl: imageURL,
-        description: description
+        description: description,
+        //userId: req.user.id
     }).then(result => {
         //console.log(result);
         return res.status(303).redirect("/");
     })
-        .catch(err => console.log(err));
+    .catch(err => console.log(err));
+
 };
 
 exports.getEditProduct = (req, res, next) => {
