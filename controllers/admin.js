@@ -57,9 +57,9 @@ exports.postEditProduct = (req, res, next) => {
     Product.findByPk(prodId)
         .then(product => {
             product.title = updatedTitle,
-            product.price = updatedPrice,
-            product.description = updatedDesc,
-            product.imageUrl = updatedImageUrl;
+                product.price = updatedPrice,
+                product.description = updatedDesc,
+                product.imageUrl = updatedImageUrl;
             return product.save();
         })
         .then(result => {
@@ -68,7 +68,7 @@ exports.postEditProduct = (req, res, next) => {
         })
         .catch(err => console.log(err));
 
-    
+
 };
 
 
@@ -89,6 +89,15 @@ exports.getProducts = (req, res, next) => {
 
 exports.deleteProduct = (req, res, next) => {
     const prodId = req.body.productId;
-    Product.deleteById(prodId);
-    res.redirect('/admin/products');
+    console.log(prodId);
+    Product.findByPk(prodId)
+        .then(product => {
+            console.log(`product ${product}`);
+            return product.destroy();
+        })
+        .then(result => {
+            console.log("Destroy");
+            res.redirect('/admin/products');
+        })
+        .catch(err => console.log(err));
 }
