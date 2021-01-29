@@ -1,7 +1,9 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const formidable = require('express-formidable');
 const expressLayouts = require('express-ejs-layouts');
+const methodOverride = require('method-override')
 
 const errorController = require('./controllers/error');
 const sequelize = require('./util/database');
@@ -11,11 +13,13 @@ const Product = require('./models/product');
 const User = require('./models/user');
 const Cart = require('./models/cart');
 const CartItem = require('./models/cart_item');
+const Category = require('./models/category');
 
 //importando os arquivos de rotas
 const adminRoutes = require('./routes/admin');
 const routesShop = require('./routes/shop');
 const routesTurbo = require('./routes/turbo');
+const routesCategory = require('./routes/category');
 
 const app = express();
 
@@ -25,7 +29,14 @@ app.set('views', 'views');
 app.use(expressLayouts);
 
 //configurando o bodyparser
-app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(bodyParser.raw({ type: 'application/vnd.turbo-stream.html' }))
+//app.use(bodyParser.urlencoded({ extended: false, type: ['text/vnd.turbo-stream.html, text/html, application/xhtml+xml'] }));
+
+//Trocando o bodyParser pelo formidable
+app.use(formidable());
+
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'))
 
 //servido arquivos estáticos!
 app.use('/public', express.static(path.join(__dirname, 'public')));
@@ -44,6 +55,7 @@ app.use((req, res, next) => {
 app.use('/admin', adminRoutes);
 app.use(routesShop);
 app.use(routesTurbo);
+app.use(routesCategory);
 
 //pagina 404
 app.use(errorController.get404);
@@ -70,7 +82,7 @@ sequelize.sync()
         return Promise.resolve(user);
     })
     .then(user => {
-        user.createCart();
+        //user.createCart();
     })
     .catch(err => {
         console.log(err);

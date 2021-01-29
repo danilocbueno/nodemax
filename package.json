@@ -18,6 +18,9 @@
     "ejs": "^3.1.5",
     "express": "^4.16.3",
     "express-ejs-layouts": "^2.5.0",
+    "express-formidable": "^1.2.0",
+    "hotwire-turbo-express": "0.0.8",
+    "method-override": "^3.0.0",
     "mysql2": "^2.2.5",
     "sequelize": "^6.4.0"
   }

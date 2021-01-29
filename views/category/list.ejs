@@ -1,0 +1,21 @@
+<h1>Categories</h1>
+
+<div id="categories_list">
+    <ul>
+        <% for (let category of categories) { %>
+            <li>
+                <span>
+                    <%= category.title %>
+                </span>
+                <form method="POST" action="/categories/<%= category.id %>?_method=DELETE">
+                    <button type="submit">Delete</button>
+                </form>
+                <form method="GET" action="/categories/<%= category.id %>/edit">
+                    <button type="submit">Edit</button>
+                </form> 
+            </li>
+            <% } %>
+    </ul>
+</div>
+
+<a href="/categories/new">Nova categoria</a>

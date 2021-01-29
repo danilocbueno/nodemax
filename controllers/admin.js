@@ -9,23 +9,26 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-    const title = req.body.title;
-    const imageURL = req.body.imageUrl;
-    const price = req.body.price;
-    const description = req.body.description;
 
-    req.user.createProduct({
-        title: title,
-        price: price,
-        imageUrl: imageURL,
-        description: description,
-        //userId: req.user.id
-    }).then(result => {
-        //console.log(result);
-        return res.status(303).redirect("/");
-    })
-        .catch(err => console.log(err));
+    const { title, imageUrl, price, description } = req.fields;
+    // const title = req.body.title;
+    // const imageURL = req.body.imageUrl;
+    // const price = req.body.price;
+    // const description = req.body.description;
 
+    try {
+        const result = req.user.createProduct({
+            title: title,
+            price: price,
+            imageUrl: imageUrl,
+            description: description
+        });
+
+        res.redirect('/');
+
+    } catch (err) {
+        console.log(err);
+    };
 };
 
 exports.getEditProduct = (req, res, next) => {
