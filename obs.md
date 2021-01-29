@@ -71,3 +71,12 @@
 ## Sequelize
 ->  npm install --save sequelize
 -> alterar o arquivo database fazendo a conexão com o sequelize
+
+
+## Check it later
+https://medium.com/@filipefilpe/api-com-nodejs-e-sequelize-ab6ce07195e0
+https://blog.rocketseat.com.br/nodejs-express-sequelize/
+https://github.com/rocketseat-content/blog-express-sequelize/blob/master/index.js
+https://www.luiztools.com.br/post/tutorial-de-crud-com-node-js-sequelize-e-mysql/
+
+Wilton IT120960, Gerson IT100791, Flávio IT123717, Anderson IT207986 e Carlos IT101503
