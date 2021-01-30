@@ -79,4 +79,11 @@ https://blog.rocketseat.com.br/nodejs-express-sequelize/
 https://github.com/rocketseat-content/blog-express-sequelize/blob/master/index.js
 https://www.luiztools.com.br/post/tutorial-de-crud-com-node-js-sequelize-e-mysql/
 
-Wilton IT120960, Gerson IT100791, Flávio IT123717, Anderson IT207986 e Carlos IT101503
+
+## Add MongoDB
+
+-> Install npm install --save mongodb
+
+
+nodemax
+pass: bQA1LAfzhpPDevEb

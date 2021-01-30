@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js",
-    "start": "node app.js"
+    "start": "node app.js",
+    "start:mongo": "node appMongo.js"
   },
   "author": "Maximilian Schwarzmüller",
   "license": "ISC",
@@ -22,6 +23,7 @@
     "express-formidable": "^1.2.0",
     "hotwire-turbo-express": "0.0.8",
     "method-override": "^3.0.0",
+    "mongodb": "^3.6.3",
     "mysql2": "^2.2.5",
     "pg": "^8.5.1",
     "sequelize": "^6.4.0",
