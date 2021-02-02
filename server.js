@@ -10,6 +10,7 @@ const session = require('express-session');
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const flash = require('connect-flash');
+const csrf = require('csurf');
 
 const errorController = require('./controllers/errorController');
 const sequelize = require('./util/database');
@@ -25,10 +26,12 @@ const Category = require('./models/category');
 const adminRoutes = require('./routes/admin');
 const routesShop = require('./routes/shop');
 const routesTurbo = require('./routes/turbo');
-const routesCategory = require('./routes/category');
+const routesCategory = require('./routes/categoryRoutes');
 const authRoutes = require('./routes/authRoutes');
 
 const app = express();
+
+const csrfProtection = csrf();
 
 //configurando o template engine
 app.set('view engine', 'ejs');
@@ -58,6 +61,9 @@ app.use(session({
       }),  
 }));
 
+app.use(csrfProtection);
+
+
 //configurando as mensagens entre as requests..
 app.use(flash());
 
@@ -74,6 +80,7 @@ app.use((req, res, next) => {
 //configurando as variaveis para todas as sessoes
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals._csrf = req.csrfToken();
     next();
 })
 

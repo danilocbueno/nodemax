@@ -92,3 +92,6 @@ https://www.luiztools.com.br/post/tutorial-de-crud-com-node-js-sequelize-e-mysql
 
 ## Protegendo a senha
 -> npm install --save bcryptjs
+
+## CSRF
+-> npm install --save csurf

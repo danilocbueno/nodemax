@@ -6,7 +6,7 @@
         <% } %>
     </div>
 
-    <form class="login-form" action="/login" method="POST">
+    <form class="login-form" action="/login?_csrf=<%= _csrf %>" method="POST">
         <div class="form-control">
             <label for="email">E-mail</label>
             <input type="email" name="email" id="email">

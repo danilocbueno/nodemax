@@ -8,11 +8,13 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Open Sans', sans-serif;
+
 }
 
 main {
   padding: 1rem;
   margin: auto;
+  width: 80%;
 }
 
 form {
@@ -217,12 +219,7 @@ form {
   color: white;
 }
 
-@media (min-width: 768px) {
-  .main-header__nav {
-    display: flex;
-  }
 
-  #side-menu-toggle {
-    display: none;
-  }
+footer{
+  text-align: center;
 }
