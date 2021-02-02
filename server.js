@@ -71,6 +71,12 @@ app.use((req, res, next) => {
         .catch(err => console.log(err));
 })
 
+//configurando as variaveis para todas as sessoes
+app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    next();
+})
+
 //importando as rotas
 app.use('/admin', adminRoutes);
 app.use(routesShop);

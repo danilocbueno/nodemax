@@ -20,22 +20,38 @@ exports.getLogin = (req, res, next) => {
     });
 };
 
-exports.postLogin = (req, res, next) => {
+exports.postLogin = async (req, res, next) => {
 
     const { email, password } = req.fields;
-    req.session.isLoggedIn = 'true';
 
-
-    if (email != "a@a.com") {
+    const user = await User.findOne({ where: { email: email } });
+    if (!user) {
         req.flash('error', 'Invalid email or password.');
-        console.log("setado!");
+        return res.redirect(303, '/login');
     }
 
-    return res.redirect(303, '/login');
+    const doMatch = bcrypt.compare(password, user.password);
+    if (doMatch) {
+        req.session.isLoggedIn = true;
+        req.session.user = user;
+        await req.session.save();
+        return res.redirect(303, '/');
+    } else {
+        req.flash('error', 'Invalid email or password.');
+        return res.redirect(303, '/login');
+    }
+
+
 };
 
-exports.postLogout = (req, res, next) => {
-
+exports.postLogout = async (req, res, next) => {
+    console.log("Iam here?");
+    try {
+        await req.session.destroy();
+        res.redirect('/login');
+    } catch (err) {
+        console.log(err);
+    }
 };
 
 exports.getSignup = (req, res, next) => {
