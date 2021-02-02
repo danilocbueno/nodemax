@@ -88,3 +88,7 @@ https://www.luiztools.com.br/post/tutorial-de-crud-com-node-js-sequelize-e-mysql
 ## Add Session
 -> npm install --save express-session
 
+
+
+## Protegendo a senha
+-> npm install --save bcryptjs
