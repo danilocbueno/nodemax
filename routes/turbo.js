@@ -2,7 +2,7 @@ const path = require('path');
 const rootDir = require('../util/path');
 const express = require('express');
 const bodyParser = require('body-parser');
-const turboController = require('../controllers/turbo');
+const turboController = require('../controllers/turboController');
 
 const formidable = require('express-formidable');
 

@@ -5,9 +5,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const formidable = require('express-formidable');
 const expressLayouts = require('express-ejs-layouts');
-const methodOverride = require('method-override')
+const methodOverride = require('method-override');
+const session = require('express-session');
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
-const errorController = require('./controllers/error');
+
+const errorController = require('./controllers/errorController');
 const sequelize = require('./util/database');
 
 //importando os modelos
@@ -43,6 +46,16 @@ app.use(methodOverride('_method'))
 
 //servido arquivos estáticos!
 app.use('/public', express.static(path.join(__dirname, 'public')));
+
+//configurando a sessão
+app.use(session({
+    secret: 'my secret', 
+    resave: false, 
+    saveUninitialized: false, 
+    store: new SequelizeStore({
+        db: sequelize,
+      }),  
+}));
 
 //criando um novo middleware que coloca o usuario em toda requisicao (objeto sequelize)
 app.use((req, res, next) => {

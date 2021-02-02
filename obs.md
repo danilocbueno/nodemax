@@ -85,5 +85,6 @@ https://www.luiztools.com.br/post/tutorial-de-crud-com-node-js-sequelize-e-mysql
 -> Install npm install --save mongodb
 
 
-nodemax
-pass: bQA1LAfzhpPDevEb
+## Add Session
+-> npm install --save express-session
+
