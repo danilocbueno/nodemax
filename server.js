@@ -26,7 +26,7 @@ const adminRoutes = require('./routes/admin');
 const routesShop = require('./routes/shop');
 const routesTurbo = require('./routes/turbo');
 const routesCategory = require('./routes/category');
-const routesAuth = require('./routes/auth');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
@@ -76,7 +76,7 @@ app.use('/admin', adminRoutes);
 app.use(routesShop);
 app.use(routesTurbo);
 app.use(routesCategory);
-app.use(routesAuth);
+app.use(authRoutes);
 
 //pagina 404
 app.use(errorController.get404);
@@ -98,7 +98,7 @@ sequelize.sync()
     })
     .then(user => {
         if (!user) {
-            User.create({ name: 'Max', email: 'test@test.com' });
+            User.create({ email: 'test@test.com' });
         }
         return Promise.resolve(user);
     })

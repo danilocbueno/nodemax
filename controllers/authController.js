@@ -4,7 +4,7 @@ exports.getLogin = (req, res, next) => {
     let message = req.flash('error');
     //console.log(req.flash);
     console.log(`message: ${message}`);
-    if(message.length > 0) {
+    if (message.length > 0) {
         message = message[0];
     } else {
         message = null;
@@ -25,10 +25,38 @@ exports.postLogin = (req, res, next) => {
     req.session.isLoggedIn = 'true';
 
 
-    if(email != "a@a.com") {
+    if (email != "a@a.com") {
         req.flash('error', 'Invalid email or password.');
         console.log("setado!");
     }
 
     return res.redirect(303, '/login');
+};
+
+exports.postLogout = (req, res, next) => {
+
+};
+
+exports.getSignup = (req, res, next) => {
+    res.render('auth/signup');
+};
+
+exports.postSignup = async (req, res, next) => {
+    const { email, password, confirmPassword } = req.fields;
+    try {
+        let user = await User.findOne({ where: { email: email } });
+        if (user) {
+            return res.redirect('/login');
+        }
+
+        user = await User.create({
+            email: email,
+            password: password
+        });
+
+        return res.redirect('/login');
+
+    } catch (err) {
+        console.log(err);
+    }
 };
