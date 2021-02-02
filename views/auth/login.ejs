@@ -1,4 +1,11 @@
 <%- contentFor('body') %>
+
+    <div class="flash">
+        <% if(errorMessage) { %>
+            <p><%= errorMessage %></p>
+        <% } %>
+    </div>
+
     <form class="login-form" action="/login" method="POST">
         <div class="form-control">
             <label for="email">E-mail</label>
@@ -12,3 +19,15 @@
 
         <button class="btn" type="submit">Login</button>
     </form>
+
+    <script>
+        /*
+        document.addEventListener("turbolinks:before-cache", function () {
+            const flash_message_element = document.querySelector(".flash")
+            console.log(flash_message_element);
+            if (flash_message_element) {
+                //flash_message_element.remove()
+            }
+        })
+        */
+    </script>

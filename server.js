@@ -9,6 +9,7 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
+const flash = require('connect-flash');
 
 const errorController = require('./controllers/errorController');
 const sequelize = require('./util/database');
@@ -56,6 +57,9 @@ app.use(session({
         db: sequelize,
       }),  
 }));
+
+//configurando as mensagens entre as requests..
+app.use(flash());
 
 //criando um novo middleware que coloca o usuario em toda requisicao (objeto sequelize)
 app.use((req, res, next) => {
