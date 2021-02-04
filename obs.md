@@ -97,3 +97,10 @@ https://www.luiztools.com.br/post/tutorial-de-crud-com-node-js-sequelize-e-mysql
 -> npm install --save csurf
 -> http://sahatyalkabov.com/jsrecipes/#!/backend/csrf-protection-with-express
 -> https://medium.com/@d.silvas/how-to-implement-csrf-protection-on-a-jwt-based-app-node-csurf-angular-bb90af2a9efd
+
+## Authorization
+-> https://stackabuse.com/authentication-and-authorization-with-jwts-in-express-js/
+-> https://www.codementor.io/@manashkumarchakrobortty/authentication-and-authorization-in-node-js-19brdvhsyw
+-> https://www.luiztools.com.br/post/autenticacao-json-web-token-jwt-em-nodejs/
+-> https://developer.okta.com/blog/2019/02/14/modern-token-authentication-in-node-with-express
+https://medium.com/@pedro.lg.cs/implementando-controle-de-acesso-acl-no-nodejs-com-express-ef3a4d5bddf0

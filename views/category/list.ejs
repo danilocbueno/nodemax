@@ -8,6 +8,7 @@
                     <%= category.title %>
                 </span>
                 <form method="POST" action="/categories/<%= category.id %>?_method=DELETE">
+                    <%- _csrfForm %>
                     <button type="submit">Delete</button>
                 </form>
                 <form method="GET" action="/categories/<%= category.id %>/edit">

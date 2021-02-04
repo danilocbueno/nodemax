@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 
 exports.getLogin = (req, res, next) => {
-    console.log(req.locals);
     let message = req.flash('error');
     //console.log(req.flash);
     console.log(`message: ${message}`);
@@ -22,7 +21,6 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.postLogin = async (req, res, next) => {
-    console.log("locals from post", req.locals);
     const { email, password } = req.fields;
 
     const user = await User.findOne({ where: { email: email } });

@@ -75,7 +75,7 @@ app.use((req, res, next) => {
 const csrfProtection = csurf({
     value: (req) => {
         console.log(req.fields._csrf);
-        return  req.fields._csrf
+        return req.fields._csrf
     }
 });
 
@@ -83,23 +83,28 @@ app.use(csrfProtection);
 //configurando as variaveis para todas as sessoes
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.session.isLoggedIn;
+    //CSRF!
     res.locals._csrf = req.csrfToken();
+    res.locals._csrfForm = `<input type="hidden" name="_csrf" value="${res.locals._csrf}">`;
+
+    //flash
+    res.locals.msg = req.flash('msg');
     next();
 });
 
+/*
 app.use(function (err, req, res, next) {
     if (err.code !== 'EBADCSRFTOKEN') return next(err)
-
-    console.log(req);
-
     // handle CSRF token errors here
     res.status(403)
     res.send('form tampered with')
 });
 
+*/
+
 if ('development' == app.get('env')) {
     app.use(errorHandler());
-  }
+}
 
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'))

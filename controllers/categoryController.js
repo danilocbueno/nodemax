@@ -26,6 +26,7 @@ exports.new = (req, res, next) => {
 exports.store = async (req, res, next) => {
     const { title } = req.fields;
     const category = await Category.create({ title: title });
+    req.flash('msg', 'Category added!');
     res.redirect(303, '/categories');
 };
 
@@ -34,6 +35,7 @@ exports.delete = async (req, res, next) => {
     try {
         const id = req.params.id;
         await Category.destroy({ where: { id: id } });
+        req.flash('msg', 'Category deleted!');
         return res.redirect(303, '/categories');
     } catch (error) {
         return res.status(500).send(error.message);

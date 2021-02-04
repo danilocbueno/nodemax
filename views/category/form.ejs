@@ -3,7 +3,7 @@
 <div id="categories_list">
     <form class="product-form" action="/categories<%= category.title ? `/${category.id}?_method=PUT` : '' %>" method="POST">
 
-        <input type="hidden" name="_csrf" value="<%=_csrf%>">
+        <%- _csrfForm %>
 
         <div class="form-control">
             <label for="title">Title</label>

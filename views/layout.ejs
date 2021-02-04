@@ -25,7 +25,8 @@
             <ul class="main-header__item-list">
                 <% if (isAuthenticated) { %>
                     <li class="main-header__item">
-                        <form method="POST" action="/logout?_csrf=<%=_csrf%>">
+                        <form method="POST" action="/logout">
+                            <%- _csrfForm %>
                             <button type="submit">Logout</button>
                         </form>
                     </li>
@@ -41,7 +42,12 @@
         </nav>
     </header>
 
-    <h3><%=_csrf%></h3>
+    <div class="flash">
+        <% if(msg) { %>
+            <p><%= msg %></p>
+        <% } %>
+    </div>
+
 
     <main>
         <%- body %>
@@ -52,7 +58,7 @@
     </footer>
 
     <script type="module">
-        //import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo';
+        import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo';
     </script>
 </body>
 
