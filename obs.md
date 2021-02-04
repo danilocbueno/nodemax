@@ -95,3 +95,5 @@ https://www.luiztools.com.br/post/tutorial-de-crud-com-node-js-sequelize-e-mysql
 
 ## CSRF
 -> npm install --save csurf
+-> http://sahatyalkabov.com/jsrecipes/#!/backend/csrf-protection-with-express
+-> https://medium.com/@d.silvas/how-to-implement-csrf-protection-on-a-jwt-based-app-node-csurf-angular-bb90af2a9efd

@@ -20,7 +20,7 @@ exports.fetchOne = async (req, res, next) => {
 
 //CREATE
 exports.new = (req, res, next) => {
-    res.render('category/form', { category: { title: null } });
+    res.render('category/form', { category: { title: null }, _csrfToken: req.csrfToken() });
 };
 
 exports.store = async (req, res, next) => {

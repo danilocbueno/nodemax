@@ -10,9 +10,10 @@ const session = require('express-session');
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const flash = require('connect-flash');
-const csrf = require('csurf');
+const csurf = require('csurf');
 
 const errorController = require('./controllers/errorController');
+const errorHandler = require('errorhandler');
 const sequelize = require('./util/database');
 
 //importando os modelos
@@ -31,8 +32,6 @@ const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
-const csrfProtection = csrf();
-
 //configurando o template engine
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -45,24 +44,19 @@ app.use(expressLayouts);
 //Trocando o bodyParser pelo formidable
 app.use(formidable());
 
-// override with POST having ?_method=DELETE
-app.use(methodOverride('_method'))
-
 //servido arquivos estáticos!
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 //configurando a sessão
 app.use(session({
-    secret: 'my secret', 
-    resave: false, 
-    saveUninitialized: false, 
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: true,
+    httpOnly: true,
     store: new SequelizeStore({
         db: sequelize,
-      }),  
+    }),
 }));
-
-app.use(csrfProtection);
-
 
 //configurando as mensagens entre as requests..
 app.use(flash());
@@ -77,14 +71,40 @@ app.use((req, res, next) => {
         .catch(err => console.log(err));
 })
 
+//VAI TOMAR NO CU, LEIA A PORRA DA DOCUMENTACAO!
+const csrfProtection = csurf({
+    value: (req) => {
+        console.log(req.fields._csrf);
+        return  req.fields._csrf
+    }
+});
+
+app.use(csrfProtection);
 //configurando as variaveis para todas as sessoes
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.session.isLoggedIn;
     res.locals._csrf = req.csrfToken();
     next();
-})
+});
 
-//importando as rotas
+app.use(function (err, req, res, next) {
+    if (err.code !== 'EBADCSRFTOKEN') return next(err)
+
+    console.log(req);
+
+    // handle CSRF token errors here
+    res.status(403)
+    res.send('form tampered with')
+});
+
+if ('development' == app.get('env')) {
+    app.use(errorHandler());
+  }
+
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'))
+
+//importando as ROTAS!
 app.use('/admin', adminRoutes);
 app.use(routesShop);
 app.use(routesTurbo);
