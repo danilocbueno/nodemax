@@ -1,6 +1,9 @@
 <%- contentFor('body') %>
 
     <form class="login-form" action="/signup" method="POST">
+
+        <%- _csrfForm %>
+
         <div class="form-control">
             <label for="email">E-mail</label>
             <input type="email" name="email" id="email">

@@ -129,21 +129,11 @@ Cart.belongsToMany(Product, { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
 
 //sequelize (sincroniza o models com o banco em si)
-sequelize.sync({ force: true })
+sequelize.sync({force: true})
     .then(result => {
-        return User.findByPk(1);
+        //return User.findByPk(1);
         // console.log(result);
-    })
-    .then(user => {
-        if (!user) {
-            User.create({ email: 'test@test.com' });
-        }
-        return Promise.resolve(user);
-    })
-    .then(user => {
-        //user.createCart();
-    })
-    .catch(err => {
+    }).catch(err => {
         console.log(err);
     });
 

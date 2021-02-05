@@ -1,6 +1,6 @@
 const express = require('express');
 const categoryController = require('../controllers/categoryController');
-const isAuth = require('../middleware/is-auth');
+const { isAuth, restrictTo } = require('../middleware/is-auth');
 
 const router = express.Router();
 
@@ -17,6 +17,6 @@ router.put('/categories/:id', isAuth, categoryController.put);
 router.get('/categories/:id/edit', isAuth, categoryController.edit);
 
 //DELETE
-router.delete('/categories/:id', isAuth, categoryController.delete);
+router.delete('/categories/:id', isAuth, restrictTo('admin'), categoryController.delete);
 
 module.exports = router;

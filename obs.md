@@ -71,6 +71,8 @@
 ## Sequelize
 ->  npm install --save sequelize
 -> alterar o arquivo database fazendo a conexão com o sequelize
+-> tem que ver como colocar as migracoes
+https://blog.rocketseat.com.br/nodejs-express-sequelize/
 
 
 ## Check it later
