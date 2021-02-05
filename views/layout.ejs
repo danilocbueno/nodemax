@@ -27,24 +27,39 @@
                     <li class="main-header__item">
                         <form method="POST" action="/logout">
                             <%- _csrfForm %>
-                            <button type="submit">Logout</button>
+                                <button type="submit">Logout</button>
                         </form>
                     </li>
-                <% } else { %>
-                    <li class="main-header__item">
-                        <a href="/login">Login</a>
-                    </li>
-                    <li class="main-header__item">
-                        <a href="/signup">Signup</a>
-                    </li>
-                <% } %>
+                    <% } else { %>
+                        <li class="main-header__item">
+                            <a href="/login">Login</a>
+                        </li>
+                        <li class="main-header__item">
+                            <a href="/signup">Signup</a>
+                        </li>
+                        <% } %>
             </ul>
         </nav>
     </header>
 
     <div class="flash">
         <% if(msg) { %>
-            <p><%= msg %></p>
+            <p>
+                <%= msg %>
+            </p>
+            <% } %>
+    </div>
+
+    <div style="background-color: lightcoral">
+        <% if(validationFailure.length > 0) { %>
+            <p>Validation Errors</p>
+            <ul>
+                <% for (let failureMsg of validationFailure) { %>
+                <li>
+                    <%=failureMsg%>
+                </li>
+                <% } %>
+            </ul>
         <% } %>
     </div>
 

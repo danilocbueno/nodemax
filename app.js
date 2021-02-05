@@ -44,6 +44,14 @@ app.use(expressLayouts);
 //Trocando o bodyParser pelo formidable
 app.use(formidable());
 
+//usei porque o formidable salva os dados parseados em req.fields enquanto que algumas bibliotecas (express-validation) espera os dados em req.body
+app.use((req, res, next) => {
+    if (req.fields) {
+        req.body = req.fields;
+    }
+    next();
+});
+
 //servido arquivos estáticos!
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
@@ -89,6 +97,7 @@ app.use((req, res, next) => {
 
     //flash
     res.locals.msg = req.flash('msg');
+    res.locals.validationFailure = req.flash('validationFailure');
     next();
 });
 
@@ -102,9 +111,26 @@ app.use(function (err, req, res, next) {
 
 */
 
+// Custom server error handler
+app.use((err, req, res, next) => {
+    if (err) {
+        console.error(err.message)
+        if (!err.statusCode) { err.statusCode = 500 } // Set 500 server code error if statuscode not set
+        return res.status(err.statusCode).send({
+            statusCode: err.statusCode,
+            message: err.message
+        })
+    }
+
+next()
+});
+
+//app.use(errors());
+
 if ('development' == app.get('env')) {
     app.use(errorHandler());
 }
+
 
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'))
@@ -129,7 +155,7 @@ Cart.belongsToMany(Product, { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
 
 //sequelize (sincroniza o models com o banco em si)
-sequelize.sync({force: true})
+sequelize.sync()
     .then(result => {
         //return User.findByPk(1);
         // console.log(result);

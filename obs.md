@@ -106,3 +106,18 @@ https://www.luiztools.com.br/post/tutorial-de-crud-com-node-js-sequelize-e-mysql
 -> https://www.luiztools.com.br/post/autenticacao-json-web-token-jwt-em-nodejs/
 -> https://developer.okta.com/blog/2019/02/14/modern-token-authentication-in-node-with-express
 https://medium.com/@pedro.lg.cs/implementando-controle-de-acesso-acl-no-nodejs-com-express-ef3a4d5bddf0
+
+
+## Express validator
+-> npm install --save express-validator
+-> express-validator usa esquema de middlewares, particularmente achei que poluiu bastate o código, pode melhorar com isso: https://dev.to/nedsoft/a-clean-approach-to-using-express-validator-8go
+-> Essa abordagem melhorou: https://www.freecodecamp.org/news/how-to-make-input-validation-simple-and-clean-in-your-express-js-app-ea9b5ff5a8a7/
+
+ESse eh massa: 
+-> https://github.com/howardmann/validation
+
+-> Ou usa o joi..
+-> https://101node.io/blog/javascript-validators-comparison-using-joi-vs-express-validator/
+
+## Debug
+https://www.alura.com.br/artigos/debugando-projetos-nodejs-no-vscode?gclid=CjwKCAiA9vOABhBfEiwATCi7GGICZ-8BkP4nV888_N_FXmfIB4gnR-dxkgIRdHAYFmq00e-v9EFnyxoCB1oQAvD_BwE

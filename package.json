@@ -2,11 +2,12 @@
   "name": "nodejs-complete-guide",
   "version": "1.0.0",
   "description": "Complete Node.js Guide",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js",
-    "start": "node server.js",
+    "dev": "nodemon app.js",
+    "debug": "nodemon --inspect app.js",
+    "start": "node app.js",
     "start:mongo": "node appMongo.js"
   },
   "author": "Maximilian Schwarzmüller",
@@ -30,6 +31,7 @@
     "express-formidable": "^1.2.0",
     "express-session": "^1.17.1",
     "hotwire-turbo-express": "0.0.8",
+    "joi": "^17.3.0",
     "method-override": "^3.0.0",
     "mongodb": "^3.6.3",
     "mysql2": "^2.2.5",
