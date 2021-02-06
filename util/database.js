@@ -11,7 +11,7 @@ if (config.use_env_variable) {
     if (config.dialect === "sqlite") {
         sequelize = new Sequelize({
             dialect: 'sqlite',
-            storage: 'database.sqlite',
+            storage: 'util/db.sqlite',
             logging: false
         })
     } else {
