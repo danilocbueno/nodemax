@@ -58,8 +58,7 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.postSignup = async (req, res, next) => {
-    const { email, password, confirmPassword } = req.fields;
-    console.log(req.body);
+    const { email, password, confirmPassword } = req.body;
 
     try {
         let user = await User.findOne({ where: { email: email } });

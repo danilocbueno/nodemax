@@ -1,17 +1,18 @@
 const Product = require('../models/product');
 const multer = require('multer');
+const sharp = require('sharp');
 const { ValidationError } = require('joi');
 
-const multerStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'public/upload');
-    },
-    filename: (req, file, cb) => {
-        //product-18327327dsa1938ds1.jpeg
-        const ext = file.mimetype.split('/')[1];
-        cb(null, `product-${Date.now()}.${ext}`);
-    }
-});
+// const multerStorage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, 'public/upload');
+//     },
+//     filename: (req, file, cb) => {
+//         //product-18327327dsa1938ds1.jpeg
+//         const ext = file.mimetype.split('/')[1];
+//         cb(null, `product-${Date.now()}.${ext}`);
+//     }
+// });
 
 const multerFilter = (req, file, cb) => {
     if (file.mimetype.startsWith('image')) {
@@ -21,12 +22,27 @@ const multerFilter = (req, file, cb) => {
     }
 }
 
+const multerStorage = multer.memoryStorage();
+
 const upload = multer({
     storage: multerStorage,
     fileFilter: multerFilter
 });
 
 exports.uploadProductPhoto = upload.single('imageUrl');
+exports.resizeProductPhoto = (req, res, next) => {
+    if (!req.file) return next();
+
+    req.filename = `product-${Date.now()}.jpeg`;
+
+    sharp(req.file.buffer)
+        .resize(500, 500)
+        .toFormat('jpeg')
+        .jpeg({ quality: 90 })
+        .toFile(`public/upload/${req.filename}`);
+    
+    next();
+}
 
 exports.getAddProduct = (req, res, next) => {
     res.render('admin/edit-product', {
@@ -40,7 +56,7 @@ exports.postAddProduct = (req, res, next) => {
     const { title, price, description } = req.body;
     //console.log('body:', req.body);
     //console.log('file:', req.file);
-    const imageUrl = (req.file) ? `${req.file.destination}/${req.file.filename}` : 'dummy data';
+    const imageUrl = (req.filename) ? `public/upload/${req.filename}` : 'dummy data';
 
     try {
         const result = req.user.createProduct({

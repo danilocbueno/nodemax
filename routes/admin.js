@@ -7,6 +7,7 @@ const router = express.Router();
 router.post('/add-product', 
     isAuth, 
     adminController.uploadProductPhoto, 
+    adminController.resizeProductPhoto,
     adminController.postAddProduct);
 
 router.get('/add-product', isAuth, adminController.getAddProduct);
