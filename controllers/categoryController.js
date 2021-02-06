@@ -20,11 +20,11 @@ exports.fetchOne = async (req, res, next) => {
 
 //CREATE
 exports.new = (req, res, next) => {
-    res.render('category/form', { category: { title: null }, _csrfToken: req.csrfToken() });
+    res.render('category/form', { category: { title: null } });
 };
 
 exports.store = async (req, res, next) => {
-    const { title } = req.fields;
+    const { title } = req.body;
     const category = await Category.create({ title: title });
     req.flash('msg', 'Category added!');
     res.redirect(303, '/categories');

@@ -1,4 +1,32 @@
 const Product = require('../models/product');
+const multer = require('multer');
+const { ValidationError } = require('joi');
+
+const multerStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/upload');
+    },
+    filename: (req, file, cb) => {
+        //product-18327327dsa1938ds1.jpeg
+        const ext = file.mimetype.split('/')[1];
+        cb(null, `product-${Date.now()}.${ext}`);
+    }
+});
+
+const multerFilter = (req, file, cb) => {
+    if (file.mimetype.startsWith('image')) {
+        cb(null, true)
+    } else {
+        cb(new ValidationError('Not an image!'), false);
+    }
+}
+
+const upload = multer({
+    storage: multerStorage,
+    fileFilter: multerFilter
+});
+
+exports.uploadProductPhoto = upload.single('imageUrl');
 
 exports.getAddProduct = (req, res, next) => {
     res.render('admin/edit-product', {
@@ -9,12 +37,10 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-
-    const { title, imageUrl, price, description } = req.fields;
-    // const title = req.body.title;
-    // const imageURL = req.body.imageUrl;
-    // const price = req.body.price;
-    // const description = req.body.description;
+    const { title, price, description } = req.body;
+    //console.log('body:', req.body);
+    //console.log('file:', req.file);
+    const imageUrl = (req.file) ? `${req.file.destination}/${req.file.filename}` : 'dummy data';
 
     try {
         const result = req.user.createProduct({

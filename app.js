@@ -9,6 +9,8 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
+const multer = require('multer');
+
 const flash = require('connect-flash');
 const csurf = require('csurf');
 
@@ -39,18 +41,21 @@ app.use(expressLayouts);
 
 //configurando o bodyparser
 //app.use(bodyParser.raw({ type: 'application/vnd.turbo-stream.html' }))
-//app.use(bodyParser.urlencoded({ extended: false, type: ['text/vnd.turbo-stream.html, text/html, application/xhtml+xml'] }));
+app.use(bodyParser.urlencoded({ extended: true}));
 
 //Trocando o bodyParser pelo formidable
-app.use(formidable());
+/*
+app.use(formidable({
+    uploadDir: path.join(__dirname, 'public', 'upload'),
+    keepExtensions: true
+}));
+*/
+
+//UPLOAD
+//app.use(multer().single('imageUrl'));
 
 //usei porque o formidable salva os dados parseados em req.fields enquanto que algumas bibliotecas (express-validation) espera os dados em req.body
-app.use((req, res, next) => {
-    if (req.fields) {
-        req.body = req.fields;
-    }
-    next();
-});
+
 
 //servido arquivos estáticos!
 app.use('/public', express.static(path.join(__dirname, 'public')));
@@ -79,19 +84,27 @@ app.use((req, res, next) => {
         .catch(err => console.log(err));
 })
 
-//VAI TOMAR NO CU, LEIA A PORRA DA DOCUMENTACAO!
-const csrfProtection = csurf({
-    value: (req) => {
-        console.log(req.fields._csrf);
-        return req.fields._csrf
+/*
+app.use((req, res, next) => {
+    console.log("AQUI!!!");
+    console.log(req.body);
+    console.log(req.fields);
+    if (req.fields) {
+        req.body = req.fields;
     }
+    next();
 });
+*/
 
+//VAI TOMAR NO CU, LEIA A PORRA DA DOCUMENTACAO!
+const csrfProtection = csurf();
 app.use(csrfProtection);
+
 //configurando as variaveis para todas as sessoes
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.session.isLoggedIn;
     //CSRF!
+    res.locals._csrf = 'fakecsrf';
     res.locals._csrf = req.csrfToken();
     res.locals._csrfForm = `<input type="hidden" name="_csrf" value="${res.locals._csrf}">`;
 
@@ -100,16 +113,6 @@ app.use((req, res, next) => {
     res.locals.validationFailure = req.flash('validationFailure');
     next();
 });
-
-/*
-app.use(function (err, req, res, next) {
-    if (err.code !== 'EBADCSRFTOKEN') return next(err)
-    // handle CSRF token errors here
-    res.status(403)
-    res.send('form tampered with')
-});
-
-*/
 
 // Custom server error handler
 app.use((err, req, res, next) => {
@@ -122,7 +125,7 @@ app.use((err, req, res, next) => {
         })
     }
 
-next()
+    next()
 });
 
 //app.use(errors());

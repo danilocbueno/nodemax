@@ -100,6 +100,10 @@ https://www.luiztools.com.br/post/tutorial-de-crud-com-node-js-sequelize-e-mysql
 -> http://sahatyalkabov.com/jsrecipes/#!/backend/csrf-protection-with-express
 -> https://medium.com/@d.silvas/how-to-implement-csrf-protection-on-a-jwt-based-app-node-csurf-angular-bb90af2a9efd
 
+
+O problema com o CSRF é o seguinte. O bodyParser funciona normal mesmo com o hotwire turbo, o porém é o momento do parser e o tipo do form. Se for formulario de upload em que precisa do enctype o bodyparser não vai agir então o token não vai ser parseado e vai dar o erro de invalid csrf token. A solução mais simples (não sei se é a melhor) é passar o token via GET na URL do form. O CSRF procura dentro de req.body e também na URL, ai nesse caso apesar de não ser parseado ele vai encontrar!
+
+
 ## Authorization
 -> https://stackabuse.com/authentication-and-authorization-with-jwts-in-express-js/
 -> https://www.codementor.io/@manashkumarchakrobortty/authentication-and-authorization-in-node-js-19brdvhsyw

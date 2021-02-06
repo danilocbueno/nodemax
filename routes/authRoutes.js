@@ -1,7 +1,6 @@
 const express = require('express');
 const authController = require('../controllers/authController');
 
-const { celebrate, CelebrateError } = require('celebrate');
 const router = express.Router();
 const Joi = require('joi')
 
