@@ -20,7 +20,11 @@ const Product = sequelize.define('product', {
     description: {
         type: Sequelize.STRING,
         allowNull: false
-    }
+    },
+    type: {
+        type: Sequelize.ENUM('online', 'offline'),
+        defaultValue: 'online'
+    },
 });
 
 module.exports = Product;

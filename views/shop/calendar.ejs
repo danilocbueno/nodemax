@@ -1,0 +1,55 @@
+<%- contentFor('body') %>
+    <style>
+        .scheduling {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+
+    <div class="scheduling">
+        <article class="card product-item">
+            <header class="card__header">
+                <p class="centered">Serviço selecionado:</p>
+                <h1 class="product__title">
+                    <%= product.title %>
+                </h1>
+            </header>
+            <div class="card__image">
+                <img src="/<%= product.imageUrl %>" alt="A Book">
+            </div>
+            <div class="card__content">
+                <p class="product__description">
+                    <%= product.description %>
+                </p>
+            </div>
+        </article>
+        <aside>
+            <div class="card product-item centered">
+                <div class="card__content">
+                    <h2>Faça o agendamento:</h2>
+                    <form action="/calendar" method="POST">
+                        <%- _csrfForm %>
+
+                        <div class="form-control">
+                            <label for="description">Dia</label>
+                            <input type="date" name="date">
+                        </div>
+
+                        <div class="form-control">
+                            <label for="description">Horário</label>
+                            <input type="time" name="time">
+                        </div>
+
+                        <div class="form-control">
+                            <h2 class="product__price">Preço: R$<%= product.price %>
+                            </h2>
+                        </div>
+
+                        <input type="hidden" name="productId" value="<%= product.id %>">
+                        <button class="btn" type="submit">Finalizar agendamento</button>
+                    </form>
+
+                </div>
+            </div>
+        </aside>
+    </div>

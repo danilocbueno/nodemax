@@ -3,6 +3,8 @@ const rootDir = require('../util/path');
 
 const Product = require('../models/product');
 const Cart = require('../models/cart');
+const Order = require('../models/order');
+const { ValidationError } = require('joi');
 
 // /products
 exports.getProducts = async (req, res, next) => {
@@ -92,11 +94,18 @@ exports.postCartDeleteProduct = (req, res, next) => {
     })
 };
 
-exports.getOrders = (req, res, next) => {
-    res.render('shop/orders', {
-        path: '/orders',
-        pageTitle: 'Your orders'
-    });
+exports.getOrders = async (req, res, next) => {
+    try {
+        const orders = await req.user.getOrders({
+            include: ['product', 'user'], 
+            raw: true,
+            nest: true,
+        });
+        
+        return res.render('shop/orders', { orders: orders });
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
 };
 
 
@@ -106,3 +115,46 @@ exports.getCheckout = (req, res, next) => {
         pageTitle: 'Your checkout'
     });
 };
+
+exports.postOrder = (req, res, next) => {
+    res.render('shop/checkout', {
+        path: '/checkout',
+        pageTitle: 'Your checkout'
+    });
+};
+
+exports.getCalendar = async (req, res, next) => {
+    try {
+        const { productId } = req.params;
+        const product = await Product.findByPk(productId, { raw: true });
+
+        if (product) {
+            return res.render('shop/calendar', { product: product });
+        } else {
+            throw new ValidationError('Product not found!');
+        }
+
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+}
+
+exports.postCalendar = async (req, res, next) => {
+    try {
+        const { date, time, productId } = req.body;
+        
+        const schedulingDate = new Date(`${date} ${time}`);
+        
+        const order = await req.user.createOrder({
+            scheduling: schedulingDate,
+            productId: productId
+        });
+
+        req.flash('msg', 'Order done!');
+        res.redirect(303, '/');
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+
+    return next();
+}

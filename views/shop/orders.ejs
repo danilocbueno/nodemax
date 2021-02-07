@@ -1,1 +1,16 @@
-<h1>Nothing there!</h1>
+<h1>Orders</h1>
+<% if (orders.length <= 0) { %>
+    <h1>Nothing there!</h1>
+<% } else { %>
+    <ul>
+        <% orders.forEach(order => { %>
+            <li>
+                <h1># <%= order.id %></h1>
+                <ul>
+                    <li><%= order.product.title %> (<%= order.product.price %>)</li>
+                    <li><%= formatDate(order.scheduling) %>
+                </ul>
+            </li>
+        <% }); %>
+    </ul>
+<% } %>

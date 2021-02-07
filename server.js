@@ -21,6 +21,9 @@ const sequelize = require('./util/database');
 //importando os modelos
 const Product = require('./models/product');
 const User = require('./models/user');
+const Order = require('./models/order');
+
+
 const Cart = require('./models/cart');
 const CartItem = require('./models/cart_item');
 const Category = require('./models/category');
@@ -32,6 +35,13 @@ const routesTurbo = require('./routes/turbo');
 const routesCategory = require('./routes/categoryRoutes');
 const authRoutes = require('./routes/authRoutes');
 
+const moment = require('moment');
+moment.locale('pt-br');
+
+const dayjs = require('dayjs');
+const localePtBr = require('dayjs/locale/pt-br');
+dayjs.locale(localePtBr);
+
 const app = express();
 
 //configurando o template engine
@@ -41,7 +51,7 @@ app.use(expressLayouts);
 
 //configurando o bodyparser
 //app.use(bodyParser.raw({ type: 'application/vnd.turbo-stream.html' }))
-app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //Trocando o bodyParser pelo formidable
 /*
@@ -75,14 +85,18 @@ app.use(session({
 app.use(flash());
 
 //criando um novo middleware que coloca o usuario em toda requisicao (objeto sequelize)
+
 app.use((req, res, next) => {
-    User.findByPk(1)
+    if (!req.session.user) {
+        return next();
+    }
+    User.findByPk(req.session.user.id)
         .then(user => {
             req.user = user;
             next();
         })
         .catch(err => console.log(err));
-})
+});
 
 /*
 app.use((req, res, next) => {
@@ -111,6 +125,14 @@ app.use((req, res, next) => {
     //flash
     res.locals.msg = req.flash('msg');
     res.locals.validationFailure = req.flash('validationFailure');
+
+    //helpers
+    res.locals.formatDate = (date) => {
+        //const momentDate = moment(date);
+        const moment = dayjs(date);
+        //return momentDate.format("dddd (D) [de] MMMM [de] YYYY [ás] h:mm a");
+        return moment.format("DD [de] MMMM [de] YYYY (dddd), [ás] HH:mm"); // display
+    }
     next();
 });
 
@@ -152,16 +174,17 @@ app.use(errorController.get404);
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product);
 
-User.hasOne(Cart);
-Cart.belongsTo(User);
-Cart.belongsToMany(Product, { through: CartItem });
-Product.belongsToMany(Cart, { through: CartItem });
+Order.belongsTo(User);
+User.hasMany(Order);
+
+Order.belongsTo(Product);
+
 
 //sequelize (sincroniza o models com o banco em si)
 sequelize.sync()
     .then(result => {
         //return User.findByPk(1);
-        // console.log(result);
+        //console.log(result);
     }).catch(err => {
         console.log(err);
     });
