@@ -49,6 +49,10 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(expressLayouts);
 
+app.set("layout extractMetas", true);
+app.set("layout extractStyles", true);
+app.set("layout extractScripts", true);
+
 //configurando o bodyparser
 //app.use(bodyParser.raw({ type: 'application/vnd.turbo-stream.html' }))
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -78,6 +82,7 @@ app.use(session({
     httpOnly: true,
     store: new SequelizeStore({
         db: sequelize,
+        tableName: 'session'
     }),
 }));
 
@@ -123,7 +128,7 @@ app.use((req, res, next) => {
     res.locals._csrfForm = `<input type="hidden" name="_csrf" value="${res.locals._csrf}">`;
 
     //flash
-    res.locals.msg = req.flash('msg');
+    res.locals.flash = req.flash();
     res.locals.validationFailure = req.flash('validationFailure');
 
     //helpers

@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="/public/css/main.css">
     <link rel="stylesheet" href="/public/css/forms.css">
     <link rel="stylesheet" href="/public/css/product.css">
+
+    <%- style %>
+    <%- meta %>
 </head>
 
 <body>
@@ -42,25 +45,24 @@
         </nav>
     </header>
 
-    <div class="flash">
-        <% if(msg) { %>
-            <p>
-                <%= msg %>
-            </p>
-            <% } %>
-    </div>
-
-    <div style="background-color: lightcoral">
-        <% if(validationFailure.length > 0) { %>
-            <p>Validation Errors</p>
-            <ul>
-                <% for (let failureMsg of validationFailure) { %>
-                <li>
-                    <%=failureMsg%>
-                </li>
-                <% } %>
-            </ul>
-        <% } %>
+    <div>
+        <% if(flash) { %>
+            <% if(flash.success && flash.success.length> 0) { %>
+                <ul class="alert-success" style="background-color: lightgreen">
+                    <li>
+                        <%= flash.success[0]%>
+                    </li>
+                </ul>
+                <% } else if(flash.error && flash.error.length> 0) { %>
+                    <ul class="alert-danger" style="background-color: lightcoral">
+                        <% for (let errorMsg of flash.error) { %>
+                            <li>
+                                <%=errorMsg%>
+                            </li>
+                            <% } %>
+                    </ul>
+                    <% } %>
+                        <% } %>
     </div>
 
 
@@ -69,12 +71,15 @@
     </main>
 
     <footer>
-        
-    </footer>
 
+    </footer>
     <script type="module">
         import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo';
+        document.addEventListener("turbo:before-cache", function () {
+            //console.log('alow');
+        });
     </script>
+     <%- script %>
 </body>
 
 </html>

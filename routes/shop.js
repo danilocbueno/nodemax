@@ -17,6 +17,11 @@ router.get('/calendar/:productId', shopController.getCalendar);
 router.post('/calendar', shopController.postCalendar);
 
 router.get('/orders', shopController.getOrders);
-router.get('/checkout', shopController.getCheckout);
+
+router.get('/checkout/:orderId', shopController.getCheckout);
+router.post('/checkout/', shopController.postCheckout);
+
+router.get('/checkout/success', shopController.getOrders);
+router.get('/checkout/cancel', shopController.getCheckout);
 
 module.exports = router;

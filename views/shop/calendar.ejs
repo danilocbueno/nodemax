@@ -1,4 +1,5 @@
 <%- contentFor('body') %>
+    <meta name="turbo-visit-control" content="reload">
     <style>
         .scheduling {
             display: flex;
@@ -30,26 +31,40 @@
                     <form action="/calendar" method="POST">
                         <%- _csrfForm %>
 
-                        <div class="form-control">
-                            <label for="description">Dia</label>
-                            <input type="date" name="date">
-                        </div>
+                            <div class="form-control">
+                                <label for="description">Dia</label>
+                                <input type="date" name="date">
+                            </div>
 
-                        <div class="form-control">
-                            <label for="description">Horário</label>
-                            <input type="time" name="time">
-                        </div>
+                            <div class="form-control">
+                                <label for="description">Horário</label>
+                                <input type="time" name="time">
+                            </div>
 
-                        <div class="form-control">
-                            <h2 class="product__price">Preço: R$<%= product.price %>
-                            </h2>
-                        </div>
+                            <div class="form-control">
+                                <h2 class="product__price">Preço: R$<%= product.price %>
+                                </h2>
+                            </div>
 
-                        <input type="hidden" name="productId" value="<%= product.id %>">
-                        <button class="btn" type="submit">Finalizar agendamento</button>
+                            <input type="hidden" name="productId" value="<%= product.id %>">
                     </form>
 
                 </div>
             </div>
         </aside>
+    </div>
+
+
+    <div>
+        <script src="https://js.stripe.com/v3/"></script>
+        <button id="order-btn" class="btn">Pagar</button>
+        <script>
+            let stripe = Stripe('pk_test_51IGx4PGemRLi8D4AY7rUj9NQ17e2Z4jDPRju9IUh6gF781yAWBQlYp5SrJcOg6sFMGcNJn9p8xP9E5rlZCZC4NQF00UIHB9qFD');
+            const orderBtn = document.getElementById('order-btn');
+            orderBtn.addEventListener('click', () => {
+                stripe.redirectToCheckout({
+                    sessionId: '<%= sessionId %>'
+                });
+            });
+        </script>
     </div>

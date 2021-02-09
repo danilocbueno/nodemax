@@ -26,7 +26,7 @@ exports.new = (req, res, next) => {
 exports.store = async (req, res, next) => {
     const { title } = req.body;
     const category = await Category.create({ title: title });
-    req.flash('msg', 'Category added!');
+    req.flash('success', 'Category added!');
     res.redirect(303, '/categories');
 };
 
@@ -35,7 +35,7 @@ exports.delete = async (req, res, next) => {
     try {
         const id = req.params.id;
         await Category.destroy({ where: { id: id } });
-        req.flash('msg', 'Category deleted!');
+        req.flash('success', 'Category deleted!');
         return res.redirect(303, '/categories');
     } catch (error) {
         return res.status(500).send(error.message);
@@ -57,7 +57,7 @@ exports.edit = async (req, res, next) => {
 exports.put = async (req, res, next) => {
     try {
         const id = req.params.id;
-        const { title } = req.fields;
+        const { title } = req.body;
         console.log(title);
         await Category.update({ title: title }, {
             where: { id: id }

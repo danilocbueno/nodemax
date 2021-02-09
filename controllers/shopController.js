@@ -5,6 +5,9 @@ const Product = require('../models/product');
 const Cart = require('../models/cart');
 const Order = require('../models/order');
 const { ValidationError } = require('joi');
+const session = require('express-session');
+
+const stripe = require('stripe')('sk_test_51IGx4PGemRLi8D4AlOHA5pTKfRuni6o4GVHUdADW52hWUJwNQRydk9YYim0jj7XyEIQhOEHpFocxIGrdQ7JZiLhq00JM24hMqO');
 
 // /products
 exports.getProducts = async (req, res, next) => {
@@ -97,11 +100,11 @@ exports.postCartDeleteProduct = (req, res, next) => {
 exports.getOrders = async (req, res, next) => {
     try {
         const orders = await req.user.getOrders({
-            include: ['product', 'user'], 
+            include: ['product', 'user'],
             raw: true,
             nest: true,
         });
-        
+
         return res.render('shop/orders', { orders: orders });
     } catch (error) {
         return res.status(500).send(error.message);
@@ -109,12 +112,36 @@ exports.getOrders = async (req, res, next) => {
 };
 
 
-exports.getCheckout = (req, res, next) => {
-    res.render('shop/checkout', {
-        path: '/checkout',
-        pageTitle: 'Your checkout'
-    });
+exports.getCheckout = async (req, res, next) => {
+
+    try {
+
+        const orderId = req.params.orderId;
+
+        const order = await req.user.getOrders({
+            include: ['product', 'user'],
+            raw: true,
+            nest: true,
+            where: { id: orderId }
+        });
+
+
+
+        res.render('shop/checkout', {
+            path: '/checkout',
+            pageTitle: 'Your checkout',
+            sessionId: stripeSession.id
+        });
+
+    } catch (err) {
+        next(err);
+    }
+
 };
+
+exports.postCheckout = (req, res, next) => {
+    next();
+}
 
 exports.postOrder = (req, res, next) => {
     res.render('shop/checkout', {
@@ -128,8 +155,24 @@ exports.getCalendar = async (req, res, next) => {
         const { productId } = req.params;
         const product = await Product.findByPk(productId, { raw: true });
 
+        const stripeSession = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [{
+                name: product.title,
+                description: product.description,
+                amount: product.price,
+                currency: 'BRL',
+                quantity: '1'
+            }],
+            success_url: req.protocol + '://' + req.get('host') + '/checkout/success',
+            cancel_url: req.protocol + '://' + req.get('host') + '/checkout/cancel',
+        });
+
         if (product) {
-            return res.render('shop/calendar', { product: product });
+            return res.render('shop/calendar', {
+                product: product,
+                sessionId: stripeSession.id
+            });
         } else {
             throw new ValidationError('Product not found!');
         }
@@ -142,16 +185,16 @@ exports.getCalendar = async (req, res, next) => {
 exports.postCalendar = async (req, res, next) => {
     try {
         const { date, time, productId } = req.body;
-        
+
         const schedulingDate = new Date(`${date} ${time}`);
-        
+
         const order = await req.user.createOrder({
             scheduling: schedulingDate,
             productId: productId
         });
 
         req.flash('msg', 'Order done!');
-        res.redirect(303, '/');
+        res.redirect(303, `/checkout/${order.id}`);
     } catch (error) {
         return res.status(500).send(error.message);
     }

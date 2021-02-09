@@ -73,6 +73,7 @@
 -> alterar o arquivo database fazendo a conexão com o sequelize
 -> tem que ver como colocar as migracoes
 https://blog.rocketseat.com.br/nodejs-express-sequelize/
+-> https://www.luiztools.com.br/post/tutorial-de-migrations-com-nodejs-e-sequelize/
 
 
 ## Check it later
