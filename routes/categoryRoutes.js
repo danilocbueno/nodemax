@@ -9,14 +9,16 @@ router.get('/categories', categoryController.fecthAll);
 router.get('/categories/:id');
 
 //CREATE
-router.get('/categories/new', isAuth, categoryController.new);
-router.post('/categories', isAuth, categoryController.store);
+router.get('/categories/new', categoryController.new);
+router.post('/categories', categoryController.store);
 
 //UPDATE
-router.put('/categories/:id', isAuth, categoryController.put);
-router.get('/categories/:id/edit', isAuth, categoryController.edit);
+router.put('/categories/:id', categoryController.put);
+router.get('/categories/:id/edit', categoryController.edit);
 
 //DELETE
-router.delete('/categories/:id', isAuth, restrictTo('admin'), categoryController.delete);
+router.delete('/categories/:id',
+    //restrictTo('admin'), 
+    categoryController.delete);
 
 module.exports = router;

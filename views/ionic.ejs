@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IONIC</title>
+    
+
+    <!-- import Ionic     -->
+    <!-- <link href="https://unpkg.com/@ionic/core@4.0.0-rc.2/css/ionic.bundle.css" rel="stylesheet">
+    <script src="https://unpkg.com/@ionic/core@4.0.0-rc.2/dist/ionic.js"></script> -->
+
+    <%- style %>
+    <%- meta %>
+
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+    <script type="module">
+        import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo';
+
+        document.addEventListener('turbo:load', () => {
+            const toast = document.querySelector('ion-toast');
+            if(toast) toast.present();
+        });
+    </script>
+</head>
+
+<body>
+<ion-app>
+    <ion-header >
+        <ion-toolbar translucent>
+
+            <ion-title>Menu</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    
+        <ion-menu side="start" content-id="main-content">
+            <ion-content id="main-content">
+                <ion-list>
+                    <ion-item>
+                        <ion-icon name="mail" slot="start"></ion-icon>
+                        <ion-label>Inbox</ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-icon name="paper-plane" slot="start"></ion-icon>
+                        <ion-label>Outbox</ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-icon name="heart" slot="start"></ion-icon>
+                        <ion-label>Favorites</ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-icon name="archive" slot="start"></ion-icon>
+                        <ion-label>Archived</ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-icon name="trash" slot="start"></ion-icon>
+                        <ion-label>Trash</ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-icon name="warning" slot="start"></ion-icon>
+                        <ion-label>Spam</ion-label>
+                    </ion-item>
+                </ion-list>
+            </ion-content>
+        </ion-menu>
+
+        <div>
+            <% if(flash) { %>
+                <% if(flash.success && flash.success.length> 0) { %>
+                        <ion-toast message="<%= flash.success[0]%>" duration="2000"></ion-toast>
+                    <% } else if(flash.error && flash.error.length> 0) { %>
+                        <ul class="alert-danger" style="background-color: lightcoral">
+                            <% for (let errorMsg of flash.error) { %>
+                                <li>
+                                    <%=errorMsg%>
+                                </li>
+                                <% } %>
+                        </ul>
+                    <% } %>
+                <% } %>
+        </div>
+
+        <ion-content class="ion-padding animated fadeIn" >
+            <%- body %>
+        </ion-content>
+    </ion-app>
+
+
+    <%- script %>
+</body>
+
+</html>

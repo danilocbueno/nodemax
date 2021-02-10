@@ -17,6 +17,7 @@
     "sqlite3": "^5.0.1"
   },
   "dependencies": {
+    "@ionic/core": "^5.5.4",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",

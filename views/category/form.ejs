@@ -1,15 +1,21 @@
 <%- contentFor('body') %>
+<ion-list lines="full" class="ion-no-margin">
+    <ion-list-header lines="full">
+      <ion-label>
+        New Category
+      </ion-label>
+    </ion-list-header>
 
-<div id="categories_list">
     <form class="product-form" action="/categories<%= category.title ? `/${category.id}?_method=PUT` : '' %>" method="POST">
-
+       
         <%- _csrfForm %>
 
-        <div class="form-control">
-            <label for="title">Title</label>
-            <input type="text" name="title" id="title" value="<%= category.title ? category.title : '' %>">
-        </div>
+        <ion-item>
+            <ion-label position="floating">Title</ion-label>
+        <ion-input type="text" name="title" id="title" value="<%= category.title ? category.title : '' %>"></ion-input>
+        </ion-item>
+        
+        <ion-button class="btn" type="submit">Add Category</ion-button>
 
-        <button class="btn" type="submit">Add Category</button>
     </form>
-</div>
+</ion-list>

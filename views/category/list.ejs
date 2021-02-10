@@ -1,22 +1,40 @@
-<h1>Categories</h1>
+<%- contentFor('body') %>
 
-<div id="categories_list">
-    <ul>
-        <% for (let category of categories) { %>
-            <li>
-                <span>
-                    <%= category.title %>
-                </span>
-                <form method="POST" action="/categories/<%= category.id %>?_method=DELETE">
-                    <%- _csrfForm %>
-                    <button type="submit">Delete</button>
-                </form>
-                <form method="GET" action="/categories/<%= category.id %>/edit">
-                    <button type="submit">Edit</button>
-                </form> 
-            </li>
-            <% } %>
-    </ul>
-</div>
+<ion-list>
+    <ion-item>
+        <ion-label>
+            <strong>Categories</strong>
+        </ion-label>
+        <ion-note slot="end">
+            <ion-button href="/categories/new">Add Category</ion-button>
+        </ion-note>
+    </ion-item>
+    <% for (let category of categories) { %>
 
-<a href="/categories/new">Nova categoria</a>
+        <ion-item>
+            <ion-label>
+                <%= category.title %>
+            </ion-label>
+            <ion-note slot="end">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-button size="small" color="secondary" href="/categories/<%= category.id %>/edit">Edit
+                        </ion-col>
+                        <ion-col>
+                            <form method="POST" action="/categories/<%= category.id %>?_method=DELETE">
+                                <%- _csrfForm %>
+                                    <ion-button size="small" color="danger" type="submit">Delete</ion-button>
+                            </form>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+                </ion-button>
+
+            </ion-note>
+        </ion-item>
+        <% } %>
+</ion-list>
+<script>
+
+</script>

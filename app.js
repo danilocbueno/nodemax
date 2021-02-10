@@ -186,7 +186,7 @@ Order.belongsTo(Product);
 
 
 //sequelize (sincroniza o models com o banco em si)
-sequelize.sync()
+sequelize.sync({force: true})
     .then(result => {
         //return User.findByPk(1);
         //console.log(result);

@@ -126,3 +126,6 @@ ESse eh massa:
 
 ## Debug
 https://www.alura.com.br/artigos/debugando-projetos-nodejs-no-vscode?gclid=CjwKCAiA9vOABhBfEiwATCi7GGICZ-8BkP4nV888_N_FXmfIB4gnR-dxkgIRdHAYFmq00e-v9EFnyxoCB1oQAvD_BwE
+
+## Templating IONIC
+https://blog.logrocket.com/theming-customization-with-ionic/

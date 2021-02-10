@@ -40,7 +40,7 @@
                         <li class="main-header__item">
                             <a href="/signup">Signup</a>
                         </li>
-                        <% } %>
+                    <% } %>
             </ul>
         </nav>
     </header>
@@ -61,8 +61,8 @@
                             </li>
                             <% } %>
                     </ul>
-                    <% } %>
-                        <% } %>
+                <% } %>
+            <% } %>
     </div>
 
 
@@ -78,6 +78,13 @@
         document.addEventListener("turbo:before-cache", function () {
             //console.log('alow');
         });
+        
+        document.querySelector('header').style.backgroundColor = "red";
+
+        document.addEventListener("turbo:load", function() {
+        });
+
+        
     </script>
      <%- script %>
 </body>

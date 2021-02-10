@@ -3,12 +3,13 @@ const rootDir = require('../util/path');
 
 const Category = require('../models/category');
 
+const LAYOUT = 'ionic';
 
 //READ
 exports.fecthAll = async (req, res, next) => {
     try {
         const categories = await Category.findAll({ raw: true });
-        return res.render('category/list', { categories: categories });
+        return res.render('category/list', { layout: LAYOUT, categories: categories });
     } catch (error) {
         return res.status(500).send(error.message);
     }
@@ -20,7 +21,7 @@ exports.fetchOne = async (req, res, next) => {
 
 //CREATE
 exports.new = (req, res, next) => {
-    res.render('category/form', { category: { title: null } });
+    res.render('category/form', { layout: LAYOUT, category: { title: null } });
 };
 
 exports.store = async (req, res, next) => {
@@ -48,7 +49,7 @@ exports.edit = async (req, res, next) => {
     try {
         const id = req.params.id;
         const category = await Category.findByPk(id);
-        return res.render('category/form', { category: category });
+        return res.render('category/form', { layout: LAYOUT, category: category });
     } catch (error) {
         return res.status(500).send(error.message);
     }
