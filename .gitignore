@@ -1,5 +1,4 @@
 /node_modules
-/public/upload
 /util/db.sqlite
 .env
 smartenf.md
