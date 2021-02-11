@@ -9,27 +9,48 @@ const session = require('express-session');
 
 const stripe = require('stripe')('sk_test_51IGx4PGemRLi8D4AlOHA5pTKfRuni6o4GVHUdADW52hWUJwNQRydk9YYim0jj7XyEIQhOEHpFocxIGrdQ7JZiLhq00JM24hMqO');
 
+const pageSize = 2;
+
 // /products
 exports.getProducts = async (req, res, next) => {
 
+    const page  = req.query.page || 1;
+    console.log(page);
+    const paginate = ({ page, pageSize }) => {
+        const offset = (page - 1) * pageSize;
+        const limit = pageSize;
+      
+        return {
+          offset,
+          limit,
+        };
+      };
+
     try {
-        const products = await Product.findAll({ raw: true });
+        const data = await Product.findAndCountAll({ 
+            raw: true,
+            //...paginate({ page, pageSize })
+         });
+
+
         res.render('shop/product-list', {
-            prods: products,
+            prods: data.rows,
             pageTitle: 'Shop',
-            path: '/'
+            path: '/',
+            pagination: {
+                totalPages: Math.ceil(data.count / pageSize),
+                current: page,
+                totalItens: data.count,        
+            }
         });
     } catch (err) {
         next(err);
     }
 };
 
-// /
+
 exports.getIndex = async (req, res, next) => {
 
-    //const products = await Product.findAll({raw: true});
-    //console.log("All products:", JSON.stringify(products, null, 2));
-    //console.log(products);
 
 
     Product.findAll({ raw: true })
