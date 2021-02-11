@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="document">
 
 <head>
     <meta charset="UTF-8">
@@ -22,9 +22,9 @@
     <!--TURBO-->
     <script type="module">
         //import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo';
-        import * as turbo from 'https://cdn.jsdelivr.net/npm/@hotwired/turbo@7.0.0-beta.4/dist/turbo.es2017-esm.js'
+        import * as turbo from 'https://cdn.jsdelivr.net/npm/@hotwired/turbo@7.0.0-beta.3/dist/turbo.es2017-esm.js'
         document.addEventListener("turbo:before-cache", function () {
-            //console.log('alow');
+            //document.querySelector('#content').classList.remove('animate__animated', 'animate__fadeIn', 'animate__faster');
         });
 
         document.addEventListener("turbo:load", function() {
@@ -41,8 +41,6 @@
             console.log('acabous');
             if($spinner) { $spinner.classList.toggle('active'); $spinner.removeAttribute("disabled"); }
         });
-
-        
     </script>
     <%- style %>
     <%- meta %>
@@ -51,7 +49,7 @@
 <body>
     <%- include('includes/navigation'); %>
 
-    <main class="container mt-4 animate__animated animate__fadeIn animate__faster">
+    <main id="content" class="container mt-4">
 
         <% if(flash) { %>
             <% if(flash.success && flash.success.length> 0) { %>
@@ -72,6 +70,14 @@
         <%- body %>
     </main>
 
+    <script>
+        if (document.documentElement.hasAttribute("data-turbo-preview")) {
+            document.querySelector('#content').classList.add('animate__animated', 'animate__fadeIn', 'animate__faster');
+            console.log("preview version!");
+        } else {
+            console.log("not preview");
+        }
+    </script>
     <footer>
 
     </footer>
