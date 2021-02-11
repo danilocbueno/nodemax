@@ -30,6 +30,7 @@ const upload = multer({
 });
 
 exports.uploadProductPhoto = upload.single('imageUrl');
+
 exports.resizeProductPhoto = (req, res, next) => {
     if (!req.file) return next();
 
@@ -52,14 +53,14 @@ exports.getAddProduct = (req, res, next) => {
     });
 };
 
-exports.postAddProduct = (req, res, next) => {
+exports.postAddProduct = async (req, res, next) => {
     const { title, price, description } = req.body;
     //console.log('body:', req.body);
     //console.log('file:', req.file);
     const imageUrl = (req.filename) ? `public/upload/${req.filename}` : 'dummy data';
 
     try {
-        const result = req.user.createProduct({
+        const result = await req.user.createProduct({
             title: title,
             price: price,
             imageUrl: imageUrl,

@@ -3,7 +3,7 @@
     <div class="d-md-flex flex-md-row-reverse align-items-center justify-content-between">
         <a class="btn btn-sm btn-outline-primary mb-2 mb-md-0"
             href="/admin/add-product"
-            title="View and edit this file on GitHub" target="_blank" rel="noopener">New Product</a>
+            title="View and edit this file on GitHub" rel="noopener">New Product</a>
         <h1 class="bd-title" id="content">Products</h1>
     </div>
     <hr class="mb-4">
@@ -14,7 +14,7 @@
             <% for (let product of prods) { %>
                 <div class="col">
                     <div class="card">
-                        <img src="<%= product.imageUrl %>" class="card-img-top" alt="...">
+                        <img src="/<%= product.imageUrl %>" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">
                                 <%= product.title %>

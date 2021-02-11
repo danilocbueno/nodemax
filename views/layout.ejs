@@ -12,6 +12,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 
 
+    <!--ANIMATED-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+
 
     <%- style %>
     <%- meta %>
@@ -20,7 +24,7 @@
 <body>
     <%- include('includes/navigation'); %>
 
-    <main class="container mt-4">
+    <main class="container mt-4 animate__animated animate__fadeIn animate__faster">
 
         <% if(flash) { %>
             <% if(flash.success && flash.success.length> 0) { %>
@@ -49,8 +53,6 @@
         document.addEventListener("turbo:before-cache", function () {
             //console.log('alow');
         });
-        
-        document.querySelector('header').style.backgroundColor = "red";
 
         document.addEventListener("turbo:load", function() {
         });
