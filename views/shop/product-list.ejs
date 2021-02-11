@@ -1,29 +1,38 @@
 <%- contentFor('body') %>
-    <a href="/admin/add-product">new</a>
+
+    <div class="d-md-flex flex-md-row-reverse align-items-center justify-content-between">
+        <a class="btn btn-sm btn-outline-primary mb-2 mb-md-0"
+            href="/admin/add-product"
+            title="View and edit this file on GitHub" target="_blank" rel="noopener">New Product</a>
+        <h1 class="bd-title" id="content">Products</h1>
+    </div>
+    <hr class="mb-4">
+
+
     <% if (prods.length> 0) { %>
-        <div class="grid">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             <% for (let product of prods) { %>
-                <article class="card product-item">
-                    <header class="card__header">
-                        <h1 class="product__title">
-                            <%= product.title %>
-                        </h1>
-                    </header>
-                    <div class="card__image">
-                        <img src="<%= product.imageUrl %>" alt="A Book">
+                <div class="col">
+                    <div class="card">
+                        <img src="<%= product.imageUrl %>" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= product.title %>
+                            </h5>
+                            <p class="card-text">
+                                <%= product.description %>
+                            </p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">$<%= product.price %>
+                            </li>
+                        </ul>
+                        <div class="card-body">
+                            <a class="card-link" href="/products/<%= product.id %>">Details</a>
+                            <a class="card-link" href="/calendar/<%= product.id %>">Calendar</a>
+                        </div>
                     </div>
-                    <div class="card__content">
-                        <h2 class="product__price">$<%= product.price %>
-                        </h2>
-                        <p class="product__description">
-                            <%= product.description %>
-                        </p>
-                    </div>
-                    <div class="card__actions">
-                        <a class="btn" href="/products/<%= product.id %>">Details</a>
-                        <a class="btn" href="/calendar/<%= product.id %>">Calendar</a>
-                    </div>
-                </article>
+                </div>
                 <% } %>
         </div>
         <% } else { %>

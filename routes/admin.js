@@ -10,13 +10,13 @@ router.post('/add-product',
     adminController.resizeProductPhoto,
     adminController.postAddProduct);
 
-router.get('/add-product', adminController.getAddProduct);
+router.get('/add-product', isAuth, adminController.getAddProduct);
 
 router.get('/products', adminController.getProducts);
 
-router.get('/edit-product/:productId', adminController.getEditProduct);
-router.post('/edit-product', adminController.postEditProduct);
+router.get('/edit-product/:productId', isAuth, adminController.getEditProduct);
+router.post('/edit-product', isAuth, adminController.postEditProduct);
 
-router.post('/delete-product', adminController.deleteProduct);
+router.post('/delete-product', isAuth, adminController.deleteProduct);
 
 module.exports = router;

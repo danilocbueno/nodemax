@@ -1,5 +1,6 @@
 exports.isAuth = (req, res, next) => {
     if (!req.session.isLoggedIn) {
+        req.flash('error', 'You need to log in!');
         return res.redirect('/login');
     }
     next();
