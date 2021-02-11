@@ -1,0 +1,22 @@
+/* BUTTON with SPINNER */
+.has-spinner {
+    display: flex;
+    align-items: center;
+}
+
+.spinner {
+    display: inline-block;
+    opacity: 0;
+    max-width: 0;
+    transition: opacity 0.25s, max-width 0.45s, margin 0.45s;
+}
+
+.has-spinner.active {
+    cursor: progress;
+}
+
+.has-spinner.active .spinner {
+    margin-left: 0.8em;
+    opacity: 1;
+    max-width: 50px; /* More than it will ever come, notice that this affects on animation duration */
+}

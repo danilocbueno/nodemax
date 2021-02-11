@@ -32,9 +32,18 @@
             <% } %>
 
 
-            <button class="btn btn-primary" type="submit">
+            <style>
+               
+            </style>
+
+            <button class="btn btn-primary has-spinner " type="submit">
                 <% if(editing) { %>Update Product<% } 
                 else { %> Add Product <% } %>
+
+                <div class="spinner spinner-border spinner-border-sm" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+
             </button>
         </form>
     </div>
