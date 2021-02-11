@@ -31,12 +31,12 @@ const upload = multer({
 
 exports.uploadProductPhoto = upload.single('imageUrl');
 
-exports.resizeProductPhoto = (req, res, next) => {
+exports.resizeProductPhoto = async (req, res, next) => {
     if (!req.file) return next();
 
     req.filename = `product-${Date.now()}.jpeg`;
 
-    sharp(req.file.buffer)
+    await sharp(req.file.buffer)
         .resize(500, 500)
         .toFormat('jpeg')
         .jpeg({ quality: 90 })

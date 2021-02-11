@@ -16,7 +16,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 
+    <!--TURBO-->
+    <script type="module">
+        //import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo';
+        import * as turbo from 'https://cdn.jsdelivr.net/npm/@hotwired/turbo@7.0.0-beta.4/dist/turbo.es2017-esm.js'
+        document.addEventListener("turbo:before-cache", function () {
+            //console.log('alow');
+        });
 
+        document.addEventListener("turbo:load", function() {
+        });
+
+        document.addEventListener('turbo:submit-start', function () {
+            turbo.navigator.delegate.adapter.showProgressBar();
+            console.log('vai formulario');
+        });
+
+        document.addEventListener('turbo:submit-end', function () {
+            console.log('acabous');
+        });
+
+        console.log(turbo);
+
+        
+    </script>
     <%- style %>
     <%- meta %>
 </head>
@@ -48,17 +71,6 @@
     <footer>
 
     </footer>
-    <script type="module">
-        import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo';
-        document.addEventListener("turbo:before-cache", function () {
-            //console.log('alow');
-        });
-
-        document.addEventListener("turbo:load", function() {
-        });
-
-        
-    </script>
      <%- script %>
 </body>
 
